@@ -16,11 +16,11 @@ export default async function handler(req, res) {
   try {
     const { content, source } = req.body;
     
-    if (!content || !source) {
-      return res.status(400).json({ error: 'Content and source are required' });
+    if (!content) {
+      return res.status(400).json({ error: 'Content is required' });
     }
 
-    // 从环境变量获取API密钥 - 使用和你grade-essay.js相同的命名
+    // 从环境变量获取API密钥
     const API_KEY = process.env.QIANFAN_API_KEY;
     const APP_ID = process.env.QIANFAN_APP_ID;
     
@@ -42,34 +42,47 @@ export default async function handler(req, res) {
 
     console.log('准备调用千帆API...');
     
-    // 构建提示词
-    const prompt = `You are a professional fake news verification expert. Please analyze the following information using the SIFT four-step verification method:
+    // 使用和grade-essay.js完全相同的提示词格式
+    const systemPrompt = `You are a professional fake news verification expert. Please analyze the following information using the SIFT four-step verification method and respond in English with JSON format.`;
+
+    const userPrompt = `Please analyze this suspicious information using SIFT method:
 
 Information: "${content}"
-Source: "${source}"
+Source: "${source || 'Unknown'}"
 
-Please respond in English with JSON format containing these fields:
-- sift_analysis: {stop, investigate_source, find_coverage, trace_claims}
-- credibility_rating: string
-- final_advice: string  
-- learning_tips: string
+Please provide analysis in this exact JSON format:
+{
+  "sift_analysis": {
+    "stop": "analysis here",
+    "investigate_source": "analysis here", 
+    "find_coverage": "analysis here",
+    "trace_claims": "analysis here"
+  },
+  "credibility_rating": "rating here",
+  "final_advice": "advice here",
+  "learning_tips": "tips here"
+}`;
 
-Make the analysis detailed and educational.`;
-
+    // 使用和grade-essay.js完全相同的请求体格式
     const requestBody = {
-      messages: [
+      "model": "deepseek-v3",
+      "messages": [
         {
-          role: "user",
-          content: prompt
+          "role": "system",
+          "content": systemPrompt
+        },
+        {
+          "role": "user", 
+          "content": userPrompt
         }
       ],
-      temperature: 0.3,
-      max_tokens: 2000
+      "stream": false
     };
 
     console.log('发送请求到千帆API...');
+    console.log('请求体:', JSON.stringify(requestBody, null, 2));
     
-    // 调用百度千帆API - 使用和你grade-essay.js相同的认证方式
+    // 调用百度千帆API
     const response = await fetch('https://qianfan.baidubce.com/v2/chat/completions', {
       method: 'POST',
       headers: {
@@ -98,6 +111,7 @@ Make the analysis detailed and educational.`;
 
     const data = await response.json();
     console.log('千帆API成功响应');
+    console.log('API响应:', JSON.stringify(data, null, 2));
     
     // 解析AI回复
     let aiResponse;
@@ -109,10 +123,11 @@ Make the analysis detailed and educational.`;
       const jsonMatch = aiContent.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         aiResponse = JSON.parse(jsonMatch[0]);
+        console.log('解析后的JSON:', JSON.stringify(aiResponse, null, 2));
       } else {
         // 如果无法解析为JSON，使用默认回复
         console.log('无法解析JSON，使用默认回复');
-        aiResponse = createDefaultResponse(aiContent, source);
+        aiResponse = createDefaultResponse(content, source);
       }
     } catch (parseError) {
       console.error('解析AI回复失败:', parseError);
@@ -121,7 +136,7 @@ Make the analysis detailed and educational.`;
 
     // 添加原始内容到响应中
     aiResponse.content = content;
-    aiResponse.source = source;
+    aiResponse.source = source || 'Unknown';
 
     // 设置CORS头并返回响应
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -137,7 +152,7 @@ Make the analysis detailed and educational.`;
 }
 
 // 创建默认响应的备用函数
-function createDefaultResponse(aiContent, source) {
+function createDefaultResponse(content, source) {
   return {
     sift_analysis: {
       stop: "Based on AI analysis, this information contains multiple elements that require verification. It is recommended to stop sharing and conduct further verification.",
