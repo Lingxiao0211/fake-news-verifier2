@@ -7,8 +7,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #2d3436;
-    background: linear-gradient(135deg, #2d3436, #e84393);
+    color: #2d3748;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     padding: 20px;
 }
@@ -23,7 +23,7 @@ body {
 }
 
 header {
-    background: linear-gradient(135deg, #2d3436, #e84393);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 30px;
     text-align: center;
@@ -57,13 +57,13 @@ header h1 {
 }
 
 .info-box {
-    background: #f5f5f5;
+    background: #f8f9fa;
     padding: 25px;
     border-bottom: 1px solid #e9ecef;
 }
 
 .info-box h3 {
-    color: #2d3436;
+    color: #4a5568;
     margin-bottom: 15px;
     display: flex;
     align-items: center;
@@ -82,12 +82,12 @@ header h1 {
     padding: 15px;
     background: white;
     border-radius: 10px;
-    border-left: 4px solid #e84393;
+    border-left: 4px solid #667eea;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .step-number {
-    background: #e84393;
+    background: #667eea;
     color: white;
     width: 30px;
     height: 30px;
@@ -104,7 +104,7 @@ header h1 {
 }
 
 .input-section h3 {
-    color: #2d3436;
+    color: #4a5568;
     margin-bottom: 20px;
 }
 
@@ -122,8 +122,8 @@ textarea, input[type="text"] {
 
 textarea:focus, input[type="text"]:focus {
     outline: none;
-    border-color: #e84393;
-    box-shadow: 0 0 0 3px rgba(232, 67, 147, 0.2), inset 0 2px 5px rgba(0,0,0,0.05);
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2), inset 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .source-input {
@@ -133,7 +133,7 @@ textarea:focus, input[type="text"]:focus {
 .analyze-btn {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(135deg, #ffeaa7, #d63031);
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
     border-radius: 8px;
@@ -147,7 +147,7 @@ textarea:focus, input[type="text"]:focus {
 
 .analyze-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 7px 14px rgba(255, 109, 0, 0.4);
+    box-shadow: 0 7px 14px rgba(102, 126, 234, 0.4);
 }
 
 .analyze-btn:active {
@@ -155,7 +155,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 .analyze-btn:disabled {
-    background: #bdc3c7;
+    background: #a0aec0;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -168,7 +168,7 @@ textarea:focus, input[type="text"]:focus {
 
 .spinner {
     border: 4px solid #f3f3f3;
-    border-top: 4px solid #e84393;
+    border-top: 4px solid #667eea;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -183,7 +183,7 @@ textarea:focus, input[type="text"]:focus {
 
 .result-section {
     padding: 30px;
-    background: #f5f5f5;
+    background: #f8f9fa;
     border-top: 1px solid #e9ecef;
 }
 
@@ -197,7 +197,7 @@ textarea:focus, input[type="text"]:focus {
 .step-result {
     margin-bottom: 25px;
     padding-bottom: 20px;
-    border-bottom: 1px solid #ecf0f1;
+    border-bottom: 1px solid #edf2f7;
 }
 
 .step-result:last-child {
@@ -210,26 +210,26 @@ textarea:focus, input[type="text"]:focus {
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
-    color: #2d3436;
+    color: #4a5568;
 }
 
 .step-content {
     line-height: 1.8;
-    color: #555;
+    color: #4a5568;
 }
 
 .conclusion {
-    background: #00b894;
+    background: linear-gradient(135deg, #48bb78, #38a169);
     color: white;
     padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
-    box-shadow: 0 5px 15px rgba(0, 200, 83, 0.3);
+    box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3);
 }
 
 .examples {
     padding: 25px 30px;
-    background: #f5f5f5;
+    background: #f8f9fa;
     border-top: 1px solid #e9ecef;
 }
 
@@ -250,7 +250,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 .example:hover {
-    background: #e84393;
+    background: #667eea;
     color: white;
     transform: translateX(5px);
 }
@@ -269,21 +269,21 @@ textarea:focus, input[type="text"]:focus {
 }
 
 .tag-verified {
-    background: #00b894;
+    background: #48bb78;
     color: white;
 }
 
 .tag-misleading {
-    background: #fdcb6e;
+    background: #ed8936;
     color: white;
 }
 
 .tag-fake {
-    background: #d63031;
+    background: #e53e3e;
     color: white;
 }
 
 .tag-unknown {
-    background: #95a5a6;
+    background: #a0aec0;
     color: white;
 }
